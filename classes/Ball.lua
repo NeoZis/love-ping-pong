@@ -3,7 +3,7 @@ local B = {}
 Ball = {}
 
 function Ball:new(x, y)
-    newObj = { x = x, y = y, radius = 10, speed = 5, velocityX = 5, velocityY = 5 }
+    newObj = { x = x, y = y, radius = 10, speed = 5, velocityX = 5, velocityY = 5, level = 1 }
     self.__index = self
     return setmetatable(newObj, self)
 end
