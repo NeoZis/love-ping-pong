@@ -5,6 +5,8 @@ yPaddleShift = 500
 maxScore = 11
 isGameRunning = true
 
+love.graphics.setFont(love.graphics.newFont(30))
+
 function love.load()
     ball = Ball.create(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
     player = Paddle.create(0, love.graphics.getHeight() / 2)
@@ -66,14 +68,14 @@ function love.draw()
     player:draw()
     secondPlayer:draw()
 
-    love.graphics.print(tostring(player.score), love.graphics.getWidth() / 2 - 50 - 10, 0, 0, 2, 2)
-    love.graphics.print(tostring(secondPlayer.score), love.graphics.getWidth() / 2 + 50, 0, 0, 2, 2)
-    love.graphics.print("Level: " .. tostring(ball.level), 0, 0, 0, 2, 2)
+    love.graphics.print(tostring(player.score), love.graphics.getWidth() / 2 - 50 - 10, 0, 0)
+    love.graphics.print(tostring(secondPlayer.score), love.graphics.getWidth() / 2 + 50, 0, 0)
+    love.graphics.print("Level: " .. tostring(ball.level), 0, 0, 0)
 
     local winner = getWinner()
 
     if (winner) then
-        love.graphics.printf((winner == player and "Player" or "Computer") .. " is win", love.graphics.getWidth() / 2 - 300, 200, 200, "center", 0, 3, 3)
+        love.graphics.printf((winner == player and "Player" or "Computer") .. " is win", love.graphics.getWidth() / 2 - 200 / 2, 200, 200, "center", 0)
     end
 end
 
