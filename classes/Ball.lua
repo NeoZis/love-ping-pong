@@ -13,6 +13,15 @@ function Ball:move(x, y)
     self.y = y;
 end
 
+function Ball:getBound()
+    return {
+        top = self.y,
+        bottom = self.y + self.radius * 2,
+        left = self.x,
+        right = self.x + self.radius * 2
+    }
+end
+
 function Ball:draw()
     love.graphics.circle('fill', self.x, self.y, self.radius)
 end

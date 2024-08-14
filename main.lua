@@ -134,17 +134,9 @@ function resetBall()
 end
 
 function collision(b, p)
-    b.top = b.y - b.radius
-    b.bottom = b.y + b.radius
-    b.left = b.x - b.radius
-    b.right = b.x + b.radius
-
-    p.top = p.y
-    p.bottom = p.y + p.height
-    p.left = p.x
-    p.right = p.x + p.width
-
-    return b.right > p.left and b.bottom > p.top and b.left < p.right and b.top < p.bottom
+    local ballBound = b:getBound()
+    local paddleBound = p:getBound()
+    return ballBound.right > paddleBound.left and ballBound.bottom > paddleBound.top and ballBound.left < paddleBound.right and ballBound.top < paddleBound.bottom
 end
 
 function correctPaddleYPosition(paddle)

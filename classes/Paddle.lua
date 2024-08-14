@@ -12,6 +12,15 @@ function Paddle:move(y)
     self.y = y;
 end
 
+function Paddle:getBound()
+    return {
+        top = self.y,
+        bottom = self.y + self.height,
+        left = self.x,
+        right = self.x + self.width
+    }
+end
+
 function Paddle:draw()
     love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
 end
