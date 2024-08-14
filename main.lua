@@ -98,8 +98,7 @@ function movePlayer(dt)
         player:move(player.y - yPaddleShift * dt)
     end
 
-    player.y = player.y < 0 and 0 or player.y
-    player.y = (player.y + player.height) > love.graphics.getHeight() and love.graphics.getHeight() - player.height or player.y
+    correctPaddleYPosition(player)
 end
 
 function moveBall()
@@ -110,6 +109,8 @@ end
 function moveSecondPlayer()
     local computerLevel = 0.05
     secondPlayer.y = secondPlayer.y + (ball.y - (secondPlayer.y + secondPlayer.height / 2)) * computerLevel
+
+    correctPaddleYPosition(secondPlayer)
 end
 
 function resetBall()
@@ -144,4 +145,9 @@ function collision(b, p)
     p.right = p.x + p.width
 
     return b.right > p.left and b.bottom > p.top and b.left < p.right and b.top < p.bottom
+end
+
+function correctPaddleYPosition(paddle)
+    paddle.y = paddle.y < 0 and 0 or paddle.y
+    paddle.y = (paddle.y + paddle.height) > love.graphics.getHeight() and love.graphics.getHeight() - paddle.height or paddle.y
 end
