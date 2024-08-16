@@ -15,12 +15,12 @@ function love.load()
     player = Paddle.create(0, love.graphics.getHeight() / 2)
     secondPlayer = Paddle.create(love.graphics.getWidth() - player.width, love.graphics.getHeight() / 2)
 
-    ping = love.audio.newSource("blipSelect.wav", "static")
-    hit = love.audio.newSource("explosion.wav", "static")
-    win = love.audio.newSource("win.mp3", "static")
-    lose = love.audio.newSource("lose.mp3", "static")
+    ping = love.audio.newSource("assets/blipSelect.wav", "static")
+    hit = love.audio.newSource("assets/explosion.wav", "static")
+    win = love.audio.newSource("assets/win.mp3", "static")
+    lose = love.audio.newSource("assets/lose.mp3", "static")
 
-    music = love.audio.newSource("music.mp3", "stream")
+    music = love.audio.newSource("assets/music.mp3", "stream")
 
     music:setLooping(true)
 
