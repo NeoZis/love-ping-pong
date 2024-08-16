@@ -1,9 +1,12 @@
 local Ball = require('classes/Ball')
 local Paddle = require('classes/Paddle')
+button = require('components/button')
+
+local actions = require('components/actions')
 
 yPaddleShift = 500
 maxScore = 11
-isGameRunning = true
+isGameRunning = false
 
 love.graphics.setFont(love.graphics.newFont(30))
 
@@ -20,10 +23,12 @@ function love.load()
     music = love.audio.newSource("music.mp3", "stream")
 
     music:setLooping(true)
-    music:play()
+
+    initButtons()
 end
 
 function love.update(dt)
+    button.calcMouseHover()
     if not isGameRunning then
         return
     end
@@ -67,6 +72,7 @@ function love.draw()
     ball:draw()
     player:draw()
     secondPlayer:draw()
+    button.show()
 
     love.graphics.print(tostring(player.score), love.graphics.getWidth() / 2 - 50 - 10, 0, 0)
     love.graphics.print(tostring(secondPlayer.score), love.graphics.getWidth() / 2 + 50, 0, 0)
@@ -77,6 +83,25 @@ function love.draw()
     if (winner) then
         love.graphics.printf((winner == player and "Player" or "Computer") .. " is win", love.graphics.getWidth() / 2 - 200 / 2, 200, 200, "center", 0)
     end
+end
+
+function initButtons()
+    button.addNew("Start game", "start_game")
+    actions.addHandler("start_game", function()
+        music:play()
+        isGameRunning = true
+        button.setVisible("start_game", false)
+    end )
+
+    button.addNew("Restart", "restart_game")
+    actions.addHandler("restart_game", function()
+        music:play()
+        player.score = 0
+        secondPlayer.score = 0
+        isGameRunning = true
+        button.setVisible("restart_game", false)
+    end)
+    button.setVisible("start_game", true)
 end
 
 function getWinner()
@@ -132,6 +157,7 @@ function resetBall()
         music:stop()
         isGameRunning = false
         love.audio.play(winner == player and win or lose)
+        button.setVisible("restart_game", true)
     end
 end
 
