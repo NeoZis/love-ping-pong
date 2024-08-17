@@ -34,7 +34,7 @@ function love.update(dt)
     end
 
     movePlayer(dt)
-    moveBall()
+    moveBall(dt)
     moveSecondPlayer()
 
     if (ball.y + ball.radius > love.graphics.getHeight() or ball.y - ball.radius < 0) then
@@ -144,9 +144,10 @@ function movePlayer(dt)
     correctPaddleYPosition(player)
 end
 
-function moveBall()
-    ball.x = ball.x + ball.velocityX
-    ball.y = ball.y + ball.velocityY
+function moveBall(dt)
+    local ballSpeedCoef = 120
+    ball.x = ball.x + ball.velocityX * dt * ballSpeedCoef
+    ball.y = ball.y + ball.velocityY * dt * ballSpeedCoef
 end
 
 function moveSecondPlayer()
