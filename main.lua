@@ -125,6 +125,10 @@ function getWinner()
         return secondPlayer
     elseif (player.score > maxScore and player.score - secondPlayer.score == 2) then
         return player
+    elseif (player.score == 6 and secondPlayer.score == 0) then
+        return player
+    elseif (secondPlayer.score == 6 and player.score == 0) then
+        return secondPlayer
     end
 
     return nil
