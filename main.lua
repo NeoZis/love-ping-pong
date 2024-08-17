@@ -1,11 +1,12 @@
-local Ball = require('classes/Ball')
-local Paddle = require('classes/Paddle')
+require('constants')
+require('utils/utils')
+
+local Ball = require('components/Ball')
+local Paddle = require('components/Paddle')
 button = require('components/button')
 
 local actions = require('components/actions')
 
-yPaddleShift = 500
-maxScore = 11
 isGameRunning = false
 
 love.graphics.setFont(love.graphics.newFont(30))
@@ -34,7 +35,7 @@ function love.update(dt)
     end
 
     movePlayer(dt)
-    moveBall(dt)
+    moveBall()
     moveSecondPlayer()
 
     if (ball.y + ball.radius > love.graphics.getHeight() or ball.y - ball.radius < 0) then
@@ -43,7 +44,7 @@ function love.update(dt)
 
     local currentPlayer = (ball.x < love.graphics.getWidth() / 2) and player or secondPlayer
 
-    if (collision(ball, currentPlayer)) then
+    if (checkCollisionWithBall(ball, currentPlayer)) then
         love.audio.play(ping)
 
         local collidePoint = ball.y - (currentPlayer.y + currentPlayer.height / 2)
@@ -117,13 +118,13 @@ function initButtons()
 end
 
 function getWinner()
-    if (player.score == maxScore and (secondPlayer.score + 1) < maxScore) then
+    if (player.score == MAX_SCORE and (secondPlayer.score + 1) < MAX_SCORE) then
         return player
-    elseif (secondPlayer.score == maxScore and (player.score + 1) < maxScore) then
+    elseif (secondPlayer.score == MAX_SCORE and (player.score + 1) < MAX_SCORE) then
         return secondPlayer
-    elseif (secondPlayer.score > maxScore and secondPlayer.score - player.score == 2) then
+    elseif (secondPlayer.score > MAX_SCORE and secondPlayer.score - player.score == 2) then
         return secondPlayer
-    elseif (player.score > maxScore and player.score - secondPlayer.score == 2) then
+    elseif (player.score > MAX_SCORE and player.score - secondPlayer.score == 2) then
         return player
     elseif (player.score == 6 and secondPlayer.score == 0) then
         return player
@@ -136,18 +137,17 @@ end
 
 function movePlayer(dt)
     if (love.keyboard.isDown('down')) then
-        player:move(player.y + yPaddleShift * dt)
+        player:move(player.y + Y_PADDLE_SHIFT * dt)
     elseif (love.keyboard.isDown('up')) then
-        player:move(player.y - yPaddleShift * dt)
+        player:move(player.y - Y_PADDLE_SHIFT * dt)
     end
 
     correctPaddleYPosition(player)
 end
 
-function moveBall(dt)
-    local ballSpeedCoef = 120
-    ball.x = ball.x + ball.velocityX * dt * ballSpeedCoef
-    ball.y = ball.y + ball.velocityY * dt * ballSpeedCoef
+function moveBall()
+    ball.x = ball.x + ball.velocityX
+    ball.y = ball.y + ball.velocityY
 end
 
 function moveSecondPlayer()
@@ -176,15 +176,4 @@ function resetBall()
         love.audio.play(winner == player and win or lose)
         button.setVisible("restart_game", true)
     end
-end
-
-function collision(b, p)
-    local ballBound = b:getBound()
-    local paddleBound = p:getBound()
-    return ballBound.right > paddleBound.left and ballBound.bottom > paddleBound.top and ballBound.left < paddleBound.right and ballBound.top < paddleBound.bottom
-end
-
-function correctPaddleYPosition(paddle)
-    paddle.y = paddle.y < 0 and 0 or paddle.y
-    paddle.y = (paddle.y + paddle.height) > love.graphics.getHeight() and love.graphics.getHeight() - paddle.height or paddle.y
 end

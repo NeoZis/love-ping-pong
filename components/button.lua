@@ -21,10 +21,6 @@ end
 
 local buttonList = {}
 
-function rectangularCollision(xPos, yPos, width, height, xPos2, yPos2)
-    return (xPos < xPos2 and xPos + width > xPos2 and yPos < yPos2 and yPos + height > yPos2)
-end
-
 function button.addNew(title, event)
     local newBtn = Button:new(title, event)
     table.insert(buttonList, newBtn)
@@ -34,7 +30,7 @@ function button.calcMouseHover()
     mX, mY = love.mouse.getPosition()
     for k, b in pairs(buttonList) do
         if (b.visible) then
-            b.mouseHover = rectangularCollision(b.x - BTN_WIDTH / 2, b.y - BTN_HEIGHT / 2, BTN_WIDTH, BTN_HEIGHT, mX, mY)
+            b.mouseHover = cursorCollision(b.x - BTN_WIDTH / 2, b.y - BTN_HEIGHT / 2, BTN_WIDTH, BTN_HEIGHT, mX, mY)
         end
     end
 end
