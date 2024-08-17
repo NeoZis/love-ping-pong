@@ -86,13 +86,15 @@ function love.draw()
 end
 
 function initButtons()
+    -- Start game button
     button.addNew("Start game", "start_game")
     actions.addHandler("start_game", function()
         music:play()
         isGameRunning = true
         button.setVisible("start_game", false)
-    end )
+    end)
 
+    -- Restart game button
     button.addNew("Restart", "restart_game")
     actions.addHandler("restart_game", function()
         music:play()
@@ -101,6 +103,16 @@ function initButtons()
         isGameRunning = true
         button.setVisible("restart_game", false)
     end)
+
+    -- Resume game button
+    button.addNew("Resume", "resume_game")
+    actions.addHandler("resume_game", function()
+        music:play()
+        isGameRunning = true
+        button.setVisible("resume_game", false)
+    end)
+
+    -- Show start game button
     button.setVisible("start_game", true)
 end
 

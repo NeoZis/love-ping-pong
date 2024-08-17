@@ -12,9 +12,15 @@ function love.mousepressed(x, y, b)
     if event then
         if (actions.eventHandlers[event]) then
             actions.eventHandlers[event]()
-        else
-            --love.event.quit( 0 )
         end
+    end
+end
+
+function love.keypressed(key)
+    if key == "escape" then
+        isGameRunning = false
+        music:stop()
+        button.setVisible("resume_game", true)
     end
 end
 
