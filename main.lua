@@ -82,7 +82,7 @@ function love.draw()
     local winner = getWinner()
 
     if (winner) then
-        love.graphics.printf((winner == player and "Player" or "Computer") .. " is win", love.graphics.getWidth() / 2 - 200 / 2, 200, 200, "center", 0)
+        love.graphics.printf((winner == player and "Player" or "Computer") .. " won", love.graphics.getWidth() / 2 - 200 / 2, 200, 200, "center", 0)
     end
 end
 
