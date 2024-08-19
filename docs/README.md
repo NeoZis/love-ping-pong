@@ -1,5 +1,7 @@
 # Ping-pong game
 
+![Game example animation](game-example.gif)
+
 ## Technologies
   * Lua
   * Love2D
